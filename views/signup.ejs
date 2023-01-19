@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <!-- basic -->
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- mobile metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <!-- site metas -->
+      <title>signup.nairapay</title>
+      <meta name="keywords" content="">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <!-- bootstrap css -->
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <!-- style css -->
+      <link rel="stylesheet" href="css/style.css">
+      <!-- responsive-->
+      <link rel="stylesheet" href="css/responsive.css">
+      <!-- awesome fontfamily -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+   </head>
+   <!-- body -->
+   <body class="main-layout">
+      <!-- loader  -->
+      <div class="loader_bg">
+         <div class="loader"><img src="images/loading.gif" alt="" /></div>
+      </div>
+      <!-- end loader -->
+      <div id="mySidepanel" class="sidepanel">
+         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+         <a href="index.html">Home</a>
+         <a href="about.html">About</a>
+         <a href="contact.html">Contact</a>
+         <a href="login.html"><button type="button" class="btn btn-success">Log in</button></a>
+      </div>
+      <!-- header -->
+      <header>
+         <!-- header inner -->
+         <div class="head-top">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-sm-3">
+                     <div class="logo">
+                        <a href="index.html"><img src="images/nplogo.png" width="50%" /></a>
+                     </div>
+                  </div>
+                  <div class="col-sm-9">
+                    <ul class="email text_align_right">
+                         <!--<li class="d_none"> <a href="signup.html">Sign up <i class="fa fa-user" aria-hidden="true"></i></a> </li>
+                        <li class="d_none"> <a href="login.html">Login <i class="fa fa-user" aria-hidden="true"></i></a> </li>   >-->                     
+                        <li> <button class="openbtn" onclick="openNav()"><img src="images/menu_btn.png"></button></li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </header>
+      <!-- end header -->
+      <main class="flex-shrink-0">
+        <section class="py-5 bg-light" id="scroll-target">
+            <div class="container px-2" id="signup_form">
+                <div class="col align-items-center justify-content-center">
+                    <div class="col">
+                        <h1 class="col text-success fw-bolder mb-3" style="font-weight: bolder; text-align: center;">Create a new account</h1>
+                        <h5 class="col text-light fw-bolder mb-3 text-center">Already have an account?  <a href="/login"><span class="login_here">Sign in here</span></a></h5>
+                        <form id="form" method="post" action="/signup">
+                           <!-- <div class="inputBox"> -->
+                              <input type="text" name="email" id="email" placeholder="Enter email address">
+                              <span id="text"></span>
+                              <input type="password" name="password" id="password" placeholder="Enter a password">
+                              <span id="text2"></span>
+                              <button type="submit" class="btn btn-success">Signup</button>
+                           </div>
+                        </form>
+                        
+                    </div>
+                </div>
+        </section>
+    </main>
+     
+     
+      <!-- footer -->
+      <footer>
+         <div class="footer">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-7 col-sm-6">
+                     <div class="reader">
+                        <a href="index.html"><img src="images/nplogo.png" alt="#" width="40%"/></a>
+                        <p class="padd_flet40">Together, we're building the greenest 
+                           infrastructure to drive easy
+                           innovation that doesn't sacrifice 
+                           utility or performance, to bring the 
+                           science vision to life.</p>
+                     </div>
+                  </div>
+                  <div class="col-md-2 col-sm-6">
+                     <div class="reader">
+                        <h3>Explore</h3>
+                        <ul class="xple_menu">
+                           <li><a href="banner_main">Home</a></li>
+                           <li><a href="about.html">About</a></li>
+                           <li><a href="https://mapoly.edu.ng/web/category/news/">Blog</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                     <div class="reader">
+                        <h3>Contact</h3>
+                        <ul class="xple_menu">
+                           <li><a href="https://mapoly.edu.ng/web/category/news/">Computer Science Admin</a></li>
+                           <li><a href="https://mapoly.edu.ng/web/our-contacts/">Mapoly Admin</a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="copyright text_align_center">
+               <div class="container">
+                  <div class="row">
+                     <div class="col-md-10 offset-md-1">
+                        <p>Copyright 2022 All Right Reserved By <a href="https://html.design/"> NacosPay, Department of Computer Science, Moshood Abiola Poolytechnic</a></p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+      <!-- end footer -->
+      <!-- Javascript files-->
+      <script src="js/jquery.min.js"></script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+      <script src="js/custom.js"></script>
+      <script src="js/jquery-3.0.0.min.js"></script>
+
+     <script type="text/javascript">
+      const form = document.querySelector('form');
+
+      form.addEventListener('submit',async (e)=>{
+         e.preventDefault();
+        
+
+         const email = document.getElementById('email').value;
+         const password = document.getElementById('password').value;
+         const emailErr = document.getElementById('text');
+         const passwordErr = document.getElementById('text2');
+         emailErr.textContent ="";
+         passwordErr.textContent ="";
+
+         try {
+            const res = await fetch('http://localhost:4000/signup',{
+               method:'POST',
+               body:JSON.stringify({email,password}),
+               headers:{'Content-Type':'application/json'}
+            });
+
+            const data = await res.json();
+            if(data.error){
+               emailErr.textContent =data.error.email;
+               passwordErr.textContent =data.error.password;
+
+            }
+            if(data.user){
+               location.assign('/dashboard');
+            }
+
+         } catch (err) {
+            console.log(err)
+         }
+         
+
+      })
+     </script>
+   </body>
+</html>
