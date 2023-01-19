@@ -5,9 +5,9 @@ Nacospay is a payment portal used for making payment for departmental levy for c
 
 ## Usage
 Download or clone respository then create a .env file in the directory
-PORT = 4000
-DB_URL = your mongodb database url
-JWT_KEY = your json web token secret key it can be random text 
+PORT = your port </br>
+DB_URL = your mongodb database url </br>
+JWT_KEY = your json web token secret key it can be random text </br>
 then
 ### run
 ```
