@@ -20,6 +20,7 @@
     "lodash": "^4.17.21",
     "mongodb": "^4.13.0",
     "mongoose": "^6.7.5",
+    "nodemailer": "^6.9.0",
     "passport": "^0.6.0",
     "paystack": "^2.0.1",
     "request": "^2.88.2",

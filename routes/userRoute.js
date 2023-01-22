@@ -14,7 +14,8 @@ const {
     payPost,
     payGet,
     payVerify,
-    reciept
+    reciept,
+    emailVerification
 } = require('../controllers/userController');
 
 router.get('*',checkUser);
@@ -42,5 +43,6 @@ router.get('/verify',requireAuth,payVerify);
 
 router.get('/reciept/:id',requireAuth,reciept);
 
+router.get('/email/verify/:token',emailVerification);
 
 module.exports = router

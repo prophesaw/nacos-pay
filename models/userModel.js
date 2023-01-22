@@ -16,6 +16,10 @@ const userSchema = new Schema({
         type: String,
         required:[true,'please enter a password'],
         minlength:[6,'password should not be less than six character']
+    },
+    active:{
+        type: Boolean,
+        required:false
     }
 },{timestamps:true});
 

@@ -6,7 +6,8 @@ const request = require('request');
 const time = 1*60*60*24;
 const{initializePayment, verifyPayment} = require('../config/paystack')(request);
 const Payer = require('../models/payer');
-const _ = require('lodash')
+const _ = require('lodash');
+const {verifyMail} = require('../config/tokenSender');
 
 
 //handling errors
@@ -81,6 +82,7 @@ const signupPost = async (req,res)=>{
     const token = createToken(user._id);
     res.cookie('user',token,{httpOnly:true,maxAge:time*1000})
     res.status(201).json({user:user._id});
+    verifyMail(user.email,'adeyemin8@gmail.com');
    } catch (err) {
     const error = handleErrors(err);
     res.status(400).json({error})
@@ -158,6 +160,22 @@ const reciept = (req,res)=>{
     })
 }
 
+const emailVerification = async(req,res)=>{
+  const {token} = req.params;
+  jwt.verify(token,'ourSecretKey',async function(err,decodedToken){
+    if(err){
+      console.log(err);
+      
+    }
+    try {
+      await User.updateOne({email:decodedToken.reciever},{active:true})
+    } catch (err) {
+      console.log(err)
+    }
+  })
+
+}
+
 module.exports = {
     home,
     dashBoard,
@@ -169,5 +187,6 @@ module.exports = {
     payGet,
     payPost,
     payVerify,
-    reciept 
+    reciept,
+    emailVerification
 }
