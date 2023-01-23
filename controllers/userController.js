@@ -7,7 +7,8 @@ const time = 1*60*60*24;
 const{initializePayment, verifyPayment} = require('../config/paystack')(request);
 const Payer = require('../models/payer');
 const _ = require('lodash');
-const {verifyMail} = require('../config/tokenSender');
+const {sendMail} = require('../config/tokenSender');
+const Token = require('../models/token');
 
 
 //handling errors
@@ -40,8 +41,12 @@ const handleErrors = (err)=>{
 //end of error handling
 
 //jwt creation function
+const time2 = 60*60;
 const createToken = (id)=>{
     return jwt.sign({id},process.env.JWT_KEY,{expiresIn:time});
+}
+const verifyToken = (email)=>{
+  return jwt.sign({email},process.env.JWT_KEYS,{expiresIn:time2});
 }
 //end of jwt
 
@@ -79,10 +84,11 @@ const signupPost = async (req,res)=>{
    const {email,password} = req.body;
    try {
     const user = await User.create({email,password});
-    const token = createToken(user._id);
-    res.cookie('user',token,{httpOnly:true,maxAge:time*1000})
+    const token = verifyToken(user.email);
+    res.cookie('verify',token,{httpOnly:true,maxAge:time2*1000});
+    const message = `${process.env.BASE_URL}/email/verify/${token}`;
+    await sendMail(user.email,'Verify Email',message);
     res.status(201).json({user:user._id});
-    verifyMail(user.email,'adeyemin8@gmail.com');
    } catch (err) {
     const error = handleErrors(err);
     res.status(400).json({error})
@@ -161,18 +167,22 @@ const reciept = (req,res)=>{
 }
 
 const emailVerification = async(req,res)=>{
-  const {token} = req.params;
-  jwt.verify(token,'ourSecretKey',async function(err,decodedToken){
+ const cookie = req.cookies.verify;
+ const token = req.params.token;
+ if(token){
+  jwt.verify(cookie,process.env.JWT_KEYS,async function(err,decodedToken){
     if(err){
-      console.log(err);
-      
+      res.send('invalid link');
     }
-    try {
-      await User.updateOne({email:decodedToken.reciever},{active:true})
-    } catch (err) {
-      console.log(err)
+    const user = await User.findOne({email:decodedToken.email});
+    if(user){
+      const token1 = createToken(user._id);
+      res.cookie('user',token1,{httpOnly:true,maxAge:time*1000});
+      res.status(201).json({user:user._id});
+      await User.updateOne({ _id: user._id, verified: true });
     }
-  })
+   })
+ }
 
 }
 
