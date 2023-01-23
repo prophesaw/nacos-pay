@@ -17,9 +17,9 @@ const userSchema = new Schema({
         required:[true,'please enter a password'],
         minlength:[6,'password should not be less than six character']
     },
-    active:{
+    verified:{
         type: Boolean,
-        required:false
+        default:false
     }
 },{timestamps:true});
 
@@ -39,6 +39,13 @@ userSchema.statics.login = async function(email,password){
       throw Error('incorrect password');
     }
     throw Error('incorrect email')
+}
+
+userSchema.statics.checkVerification = async function(id){
+    const user = await this.findById(id);
+    if(user){
+        await this.deleteOne({email:user.email});
+    }
 }
 
 const User = mongoose.model('User',userSchema);
