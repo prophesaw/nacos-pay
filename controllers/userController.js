@@ -8,7 +8,7 @@ const{initializePayment, verifyPayment} = require('../config/paystack')(request)
 const Payer = require('../models/payer');
 const _ = require('lodash');
 const {sendMail} = require('../config/tokenSender');
-const Token = require('../models/token');
+
 
 
 //handling errors
