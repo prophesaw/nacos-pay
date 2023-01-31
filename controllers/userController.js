@@ -34,6 +34,10 @@ const handleErrors = (err)=>{
     errors.email ='email not correct';
   }
 
+  if(err.message.includes('User not verified')){
+    errors.email ='User not verified';
+  }
+
 
 
   return errors;
@@ -44,9 +48,6 @@ const handleErrors = (err)=>{
 const time2 = 60*60;
 const createToken = (id)=>{
     return jwt.sign({id},process.env.JWT_KEY,{expiresIn:time});
-}
-const verifyToken = (email)=>{
-  return jwt.sign({email},process.env.JWT_KEYS,{expiresIn:time2});
 }
 //end of jwt
 
@@ -84,9 +85,7 @@ const signupPost = async (req,res)=>{
    const {email,password} = req.body;
    try {
     const user = await User.create({email,password});
-    const token = verifyToken(user.email);
-    res.cookie('verify',token,{httpOnly:true,maxAge:time2*1000});
-    const message = `${process.env.BASE_URL}/email/verify/${token}`;
+    const message = `${process.env.BASE_URL}/email/verify/${user._id}`;
     await sendMail(user.email,'Verify Email',message);
     res.status(201).json({user:user._id});
    } catch (err) {
@@ -167,21 +166,19 @@ const reciept = (req,res)=>{
 }
 
 const emailVerification = async(req,res)=>{
- const cookie = req.cookies.verify;
- const token = req.params.token;
- if(token){
-  jwt.verify(cookie,process.env.JWT_KEYS,async function(err,decodedToken){
-    if(err){
-      res.send('invalid link');
-    }
-    const user = await User.findOne({email:decodedToken.email});
-    if(user){
-      const token1 = createToken(user._id);
-      res.cookie('user',token1,{httpOnly:true,maxAge:time*1000});
-      res.status(201).json({user:user._id});
-      await User.updateOne({ _id: user._id, verified: true });
-    }
-   })
+ const id = req.params.id;
+ try {
+  const user = await User.findById(id);
+  if(user){
+   User.updateOne({_id:id},{verified:true}); 
+   res.send('email verified');
+   res.redirect('/login');
+   const token = createToken(user._id)
+  res.cookie('user',token,{httpOnly:true,maxAge:time*1000});
+  res.status(201).json({user:user._id});
+  }
+ } catch (err) {
+  console.log(err);
  }
 
 }

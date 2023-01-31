@@ -31,22 +31,26 @@ userSchema.pre('save', async function(next){
 
 userSchema.statics.login = async function(email,password){
     const user = await this.findOne({email});
+    const verified = user.verified;
     if(user){
-      const auth = await bcrypt.compare(password,user.password);
-      if(auth){
-        return user;
-      }
-      throw Error('incorrect password');
+       if(verified== true){
+        const auth = await bcrypt.compare(password,user.password);
+        if(auth){
+          return user;
+        }
+        throw Error('incorrect password');
+       }
+       throw Error('User not verified');
     }
-    throw Error('incorrect email')
+    throw Error('incorrect email');
 }
 
-userSchema.statics.checkVerification = async function(id){
-    const user = await this.findById(id);
-    if(user){
-        await this.deleteOne({email:user.email});
-    }
-}
+// userSchema.statics.checkVerification = async function(id){
+//     const user = await this.findById(id);
+//     if(user){
+//         await this.deleteOne({email:user.email});
+//     }
+// }
 
 const User = mongoose.model('User',userSchema);
  module.exports = User;
