@@ -43,6 +43,6 @@ router.get('/verify',requireAuth,payVerify);
 
 router.get('/reciept/:id',requireAuth,reciept);
 
-router.get('/email/verify/:token',emailVerification);
+router.get('/email/verify/:id',emailVerification);
 
 module.exports = router
