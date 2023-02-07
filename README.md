@@ -9,11 +9,11 @@ PORT = your port </br>
 DB_URL = your mongodb database url </br>
 JWT_KEY = your json web token secret key it can be random text </br>
 then
-### run
+<b>run</b>
 ```
 npm i 
 ```
-### in the directory terminal
+<b> in the directory terminal </b>
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first

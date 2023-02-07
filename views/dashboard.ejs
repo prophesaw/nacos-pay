@@ -50,9 +50,7 @@
                   <div class="col-sm-3">
                      <div class="logo">
                         <a href="/"><img src="images/nacospay.png" /></a>
-                        <%if(user){%>
-                        <div>welcome, <%= user.email%></div>
-                        <%}%>
+                        
                      </div>
                   </div>
                   <div class="col-sm-9">
@@ -69,6 +67,14 @@
       <!-- end header -->
       <main class="flex-shrink-0">
          <section>
+            <div>
+               <%if(user){%>
+                  <div class="user-welcome-text">welcome, <%= user.email%></div>
+                  <%}%>
+            </div>
+            <div>
+               <h3>tedt</h3>
+            </div>
             <div class="bg-primary">
               <ul class="nav nav-pills nav-justified">
                   <li class="nav-item">
@@ -78,16 +84,22 @@
                </ul>
                
             </div>
-            <div>
          </section>
          <section>
            <div>
             <div class="d-grid gap-2 col-6 mx-auto">
                <button class="btn btn-white" type="button" sty>Make Payment</button>
-               <button class="btn btn-primary" type="button">Available</button>
              </div>
            </div>
 
+         </section>
+
+         <section>
+            <div>
+               <a href="/pay">
+                  <button class="pbutton">Click here to make payment</button>
+               </a>
+            </div>
          </section>
          
       </main>
