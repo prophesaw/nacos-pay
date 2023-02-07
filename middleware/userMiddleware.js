@@ -42,8 +42,3 @@ module.exports ={
     requireAuth,
     checkUser
 }
-
-// const token = createToken(user._id);
-// res.cookie('user',token,{httpOnly:true,maxAge:time*1000});
-// res.status(201).json({user:user._id});
-//await User.updateOne({ _id: user._id, verified: true });

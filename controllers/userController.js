@@ -8,7 +8,7 @@ const{initializePayment, verifyPayment} = require('../config/paystack')(request)
 const Payer = require('../models/payer');
 const _ = require('lodash');
 const {sendMail} = require('../config/tokenSender');
-const Token = require('../models/token');
+
 
 
 //handling errors
@@ -112,7 +112,6 @@ const payPost = (req,res)=>{
   }
 
    form.amount *= 100;
-   //console.log(form)
 
  initializePayment(form,(error,body)=>{
    if(error){
@@ -170,12 +169,14 @@ const emailVerification = async(req,res)=>{
  try {
   const user = await User.findById(id);
   if(user){
-   User.updateOne({_id:id},{verified:true}); 
-   res.send('email verified');
-   res.redirect('/login');
-   const token = createToken(user._id)
-  res.cookie('user',token,{httpOnly:true,maxAge:time*1000});
-  res.status(201).json({user:user._id});
+   User.updateOne({_id:id},{verified:'1'}, function(err,user){
+    if(err){
+      console.log(err);
+      res.redirect('/error');
+    }
+    res.redirect('/login');
+   }); 
+   
   }
  } catch (err) {
   console.log(err);

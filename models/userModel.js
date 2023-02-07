@@ -18,8 +18,8 @@ const userSchema = new Schema({
         minlength:[6,'password should not be less than six character']
     },
     verified:{
-        type: Boolean,
-        default:false
+        type: String,
+        default:'0'
     }
 },{timestamps:true});
 
@@ -33,7 +33,8 @@ userSchema.statics.login = async function(email,password){
     const user = await this.findOne({email});
     const verified = user.verified;
     if(user){
-       if(verified== true){
+        console.log(verified);
+       if(verified == '1'){
         const auth = await bcrypt.compare(password,user.password);
         if(auth){
           return user;
@@ -45,12 +46,7 @@ userSchema.statics.login = async function(email,password){
     throw Error('incorrect email');
 }
 
-// userSchema.statics.checkVerification = async function(id){
-//     const user = await this.findById(id);
-//     if(user){
-//         await this.deleteOne({email:user.email});
-//     }
-// }
+
 
 const User = mongoose.model('User',userSchema);
  module.exports = User;
